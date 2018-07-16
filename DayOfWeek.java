@@ -30,7 +30,7 @@ public class DayOfWeek
 		{
 			next=ye;
 		}
-			return Math.floorDiv(Math.abs((Remainder(ye,mont,da)-Remainder(next,9,WeekOne(next)))),7);
+			return Math.floorDiv(Math.abs((Remainder(ye,mont,da)-Remainder(next,9,WeekOne(next))))-1,7);
 	}
 	public String Determine(int da, int mont, int ya)
 	{
@@ -41,8 +41,8 @@ public class DayOfWeek
 			da=1;
 			mont=3;
 		}
-		difference=(int) Math.abs(PastOrFuture(da,mont,ye)*Remainder(localDate.getYear(),Calendar.MONTH,localDate.getDayOfMonth())-PastOrFuture(da,mont,ye)*Remainder(ye,mont,da)+middle(ye));
-		switch (Math.abs(Remainder(localDate.getYear(),Calendar.MONTH,localDate.getDayOfMonth()-Remainder(1972,12,16)+middle(1972)))%7)
+		difference=(int) Math.abs(PastOrFuture(da,mont,ye)*Remainder(localDate.getYear(),Calendar.MONTH,localDate.getDayOfMonth())-PastOrFuture(da,mont,ye)*Remainder(ye,mont,da))+middle(ye);
+		switch (Math.abs(Remainder(localDate.getYear(),Calendar.MONTH,localDate.getDayOfMonth()-Remainder(1972,12,16))+middle(1972))%7)
 		{
 		case 0:
 		{
@@ -54,7 +54,7 @@ public class DayOfWeek
 		}
 		default:
 		{
-			diff=Math.abs(Remainder(localDate.getYear(),Calendar.MONTH,localDate.getDayOfMonth()-Remainder(1972,12,16)+middle(1972)))%7-1;
+			diff=Math.abs(Remainder(localDate.getYear(),Calendar.MONTH,localDate.getDayOfMonth()-Remainder(1972,12,16))+middle(1972))%7-1;
 		}
 		}
 		if (PastOrFuture(da,mont,ye)==1)
@@ -70,17 +70,10 @@ public class DayOfWeek
 		}
 		else  if (PastOrFuture(da,mont,ye)==-1)
 		{
-			if (Math.signum(diff-difference%7)==-1)
+			meter=diff+difference%7;
+			if (meter>7)
 			{
-			meter=Math.abs(diff-difference%7);
-			}
-			else
-			{
-				meter=Math.abs(diff+difference%7-7);
-				if (7-meter==diff+difference%7)
-				{
-					meter=7-meter;
-				}
+				meter=meter-7;
 			}
 		}
 		switch (meter)
