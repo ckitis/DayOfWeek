@@ -22,6 +22,7 @@ public class DayOfWeek
 	public int WeekOrder(int da, int mont, int ye)
 	{
 		int next;
+		Boolean WeekBeginsWithSunday=false;
 		if (mont<9||(mont==9&&WeekOne(ye)<da))
 		{
 			next=ye-1;
@@ -30,7 +31,7 @@ public class DayOfWeek
 		{
 			next=ye;
 		}
-			return Math.floorDiv(Math.abs((Remainder(ye,mont,da)-Remainder(next,9,WeekOne(next))))-1,7);
+			return Math.floorDiv(Math.abs((Remainder(ye,mont,da)-Remainder(next,9,WeekOne(next))))-((WeekBeginsWithSunday)?0:1),7);
 	}
 	public String Determine(int da, int mont, int ya)
 	{
@@ -42,7 +43,7 @@ public class DayOfWeek
 			mont=3;
 		}
 		difference=(int) Math.abs(PastOrFuture(da,mont,ye)*Remainder(localDate.getYear(),Calendar.MONTH,localDate.getDayOfMonth())-PastOrFuture(da,mont,ye)*Remainder(ye,mont,da))+middle(ye);
-		switch (Math.abs(Remainder(localDate.getYear(),Calendar.MONTH,localDate.getDayOfMonth()-Remainder(1972,12,16))+middle(1972))%7)
+		switch ((Math.abs(Remainder(localDate.getYear(),Calendar.MONTH,localDate.getDayOfMonth())-Remainder(1972,12,16))+middle(1972))%7)
 		{
 		case 0:
 		{
@@ -54,7 +55,7 @@ public class DayOfWeek
 		}
 		default:
 		{
-			diff=Math.abs(Remainder(localDate.getYear(),Calendar.MONTH,localDate.getDayOfMonth()-Remainder(1972,12,16))+middle(1972))%7-1;
+			diff=(Math.abs(Remainder(localDate.getYear(),Calendar.MONTH,localDate.getDayOfMonth())-Remainder(1972,12,16))+middle(1972))%7-1;
 		}
 		}
 		if (PastOrFuture(da,mont,ye)==1)
